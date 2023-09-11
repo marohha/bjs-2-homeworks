@@ -78,10 +78,10 @@ function makeWork (arrOfArr, func) {
   let maxWorkerResult = -Infinity;
   for (i = 0; i < arrOfArr.length; i++){
     // Ни как не могу понять смысл 4го пунтка этой задачи. Помогите разобраться куда передавать значания? И как правильно тут использовать spread-оператор?
-    const result = ;
-    if (result > maxWorkerResult){
-      maxWorkerResult = result;
-    }
+    // const result;
+    // if (result > maxWorkerResult){
+    //   maxWorkerResult = result;
+    // }
   }
   return maxWorkerResult;
 }
