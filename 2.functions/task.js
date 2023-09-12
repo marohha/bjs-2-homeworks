@@ -3,7 +3,7 @@ function getArrayParams(...arr) {
   let max = arr[0];
   let sum = 0;
   let avg;
-  for (i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++){
     if (arr[i] > max) {
       max = arr[i];
     } else if (arr[i] < min) {
@@ -17,11 +17,11 @@ function getArrayParams(...arr) {
 }
 
 function summElementsWorker(...arr) {
-  sum = 0;
+  let sum = 0;
   if (arr.length === 0){
     return 0;
   }
-  for (i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++){
     sum += arr[i];
   }
   return sum;
@@ -33,7 +33,7 @@ function differenceMaxMinWorker(...arr) {
   if (arr.length === 0){
     return 0;
   }
-  for (i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++){
     if (arr[i] > max) {
       max = arr[i];
     } else if (arr[i] < min) {
@@ -49,7 +49,7 @@ function differenceEvenOddWorker(...arr) {
   if (arr.length === 0){
     return 0;
   }
-  for (i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++){
     if (arr[i] % 2 ===0){
       sumEvenElement += arr[i];
     } else {
@@ -65,7 +65,7 @@ function averageEvenElementsWorker(...arr) {
   if (arr.length === 0){
     return 0;
   }
-  for (i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++){
     if (arr[i] % 2 === 0){
       sumEvenElement += arr[i];
       countEvenElement ++;
@@ -76,12 +76,11 @@ function averageEvenElementsWorker(...arr) {
 
 function makeWork (arrOfArr, func) {
   let maxWorkerResult = -Infinity;
-  for (i = 0; i < arrOfArr.length; i++){
-    // Ни как не могу понять смысл 4го пунтка этой задачи. Помогите разобраться куда передавать значания? И как правильно тут использовать spread-оператор?
-    // const result;
-    // if (result > maxWorkerResult){
-    //   maxWorkerResult = result;
-    // }
+  for (let i = 0; i < arrOfArr.length; i++){
+    const result = func(...arrOfArr[i]);
+    if (result > maxWorkerResult){
+      maxWorkerResult = result;
+    }
   }
   return maxWorkerResult;
 }
