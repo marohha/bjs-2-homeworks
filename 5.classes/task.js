@@ -42,22 +42,22 @@ class Book extends PrintEditionItem {
 }
 
 class NovelBook extends Book {
-    constructor(name, releaseDate, pagesCount, state, author) {
-        super(name, releaseDate, pagesCount, state, author);
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state);
         this.type = "novel";
     }
 }
 
 class FantasticBook extends Book {
-    constructor(name, releaseDate, pagesCount, state, author) {
-        super(name, releaseDate, pagesCount, state, author);
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state);
         this.type = "fantastic";
     }
 }
 
 class DetectiveBook extends Book {
-    constructor(name, releaseDate, pagesCount, state, author) {
-        super(name, releaseDate, pagesCount, state, author);
+    constructor(author, name, releaseDate, pagesCount, state) {
+        super(author, name, releaseDate, pagesCount, state);
         this.type = "detective";
     }
 }
@@ -87,41 +87,58 @@ class Library {
     }
 
     giveBookByName(bookName) {
-        if (this.bookName in this.books) {
-            delete this.books(bookName);
-            return bookName;
-        } else {
+        const findBook = this.books.find((item) => {
+            return item.name === bookName;
+        });
+
+        if (findBook === undefined) {
             return null;
         }
 
-
-
-        // const bookIndex = this.books.findIndex((item) => {
-        //     return item.bookName === bookName;
-        // });
-
-        // if (bookIndex < 0) {
-        //     return null;
-        // }
-
-        // const bookItem = this.books[bookIndex];
-        // this.books.splice(bookIndex, 1);
-        // return bookItem;
+        const bookItem = this.books[findBook];
+        this.books.splice(findBook, 1);
+        return findBook;
     }
 }
 
 
 
 
-// class Student {
-//     constructor(name){
-//         this.name = name,
-//         this.marks = {};
-//     }
+class Student {
+    constructor(name){
+        this.name = name,
+        this.marks = {};
+    }
 
-//     addMark(mark, subject) {
-//         if (2 <= mark <= 5) {
-//             this.marks.subject = [mark];
-//         }
-//     }
-// }
+    addMark(mark, subject) {
+        if (!(Object.prototype.hasOwnProperty.call(this.marks, subject))) {
+            this.marks[subject] = [];
+        }
+
+        if (mark < 2 && mark > 5){
+            return;
+        } else {
+            this.marks[subject].push(mark);
+        }
+    }
+
+    getAverageBySubject(subject) {
+        if (!(Object.prototype.hasOwnProperty.call(this.marks, subject))) {
+            return 0;
+        }
+
+        return this.marks[subject].reduce((acc, item) => acc + item / this.marks[subject].length, 0)
+    }
+
+    getAverage() {
+        let subjects = Object.keys(this.marks);
+        if (subjects.length <= 0) {
+            return 0;
+        } 
+
+        for (let i = 0; i < subjects.length; i++) {
+            let average = this.getAverageBySubject(subjects[i]);
+            return average / subjects.length;
+        }
+    }
+}
