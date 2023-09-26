@@ -111,34 +111,29 @@ class Student {
     }
 
     addMark(mark, subject) {
-        if (!(Object.prototype.hasOwnProperty.call(this.marks, subject))) {
-            this.marks[subject] = [];
-        }
-
-        if (mark < 2 && mark > 5){
+        if (mark < 2 || mark > 5){
             return;
-        } else {
-            this.marks[subject].push(mark);
         }
+        if (!this.marks[subject]) {
+            this.marks[subject] = [];
+        } 
+        this.marks[subject].push(mark);
     }
 
     getAverageBySubject(subject) {
-        if (!(Object.prototype.hasOwnProperty.call(this.marks, subject))) {
+        if (!this.marks[subject]) {
             return 0;
         }
 
-        return this.marks[subject].reduce((acc, item) => acc + item / this.marks[subject].length, 0)
+        return this.marks[subject].reduce((acc, item) => acc + item, 0) / this.marks[subject].length;
     }
 
     getAverage() {
         let subjects = Object.keys(this.marks);
-        if (subjects.length <= 0) {
+        if (subjects.length === 0) {
             return 0;
         } 
 
-        for (let i = 0; i < subjects.length; i++) {
-            let average = this.getAverageBySubject(subjects[i]);
-            return average / subjects.length;
-        }
+        return subjects.reduce((acc, subject) => acc += this.getAverageBySubject(subject), 0) / subjects.length;
     }
 }
