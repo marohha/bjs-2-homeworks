@@ -13,19 +13,18 @@ class AlarmClock {
             console.warn('Уже присутствует звонок на это же время');
         }
 
-        const canCall = () => callback = true; // пробовал и так 
-
-        // const func = callback = () => true;  
-        // const canCall = func;
-
-        // и так пробовал, но не могу понять принцип куда здесь присваивать callBack. Не могу понять последовательность.
-        // и еще десяток вариантов у меня было =)))
-
+        let canCall = true;
+        callback(() => canCall);
         this.alarmCollection.push({callback, time, canCall});
     }
 
     removeClock(timeNew) {
-        delete this.alarmCollection.filter(timeNew => timeNew === this.time);
+        for (let i = 0; i < this.alarmCollection.length; i++) {
+            if (this.alarmCollection[i].time === timeNew) {
+                this.alarmCollection.splice(timeNew, 2);
+            }
+        }
+        // delete this.alarmCollection.filter(item => item.time === timeNew); 
     }
 
     getCurrentFormattedTime() {
@@ -39,9 +38,9 @@ class AlarmClock {
         if (!this.intervalId === null) {
             return;
         }
-        setInterval(() => this.alarmCollection.forEach((item) => {
-            if (this.time === new Date() && item.canCall === true) {
-                item.canCall = false;
+        setInterval(() => this.alarmCollection.forEach((alarm) => {
+            if (this.time === this.getCurrentFormattedTime() && alarm.canCall === true) {
+                alarm.canCall = false;
                 callback();
             }
         }), 1000);
@@ -56,7 +55,8 @@ class AlarmClock {
     }
 
     clearAlarms() {
-        this.stop(() => this.alarmCollection = []);
+        this.stop(); 
+        this.alarmCollection = [];
     }
 
 
